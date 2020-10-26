@@ -16,7 +16,7 @@ export default function Header() {
                 <Toolbar>
                     <Navbar/>
                     <Typography variant="h6" className={classes.title}>
-                        MENU
+                        МЕНЮ
                     </Typography>
                     <Button color="inherit">Login</Button>
                 </Toolbar>
