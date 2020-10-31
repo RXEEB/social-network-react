@@ -1,32 +1,28 @@
 import React from 'react';
 import './App.css';
 import Header from './components/Header/Header';
-import {BrowserRouter, Route, Switch } from 'react-router-dom'
-import Dialogs from "./components/Dialogs/Dialogs";
-import Profile from "./components/Profile/Profile";
+import Profile from './components/Profile/Profile';
+import {Route} from "react-router-dom";
+import DialogsContainer from "./components/Dialogs/DialogsContainer";
+import UsersContainer from './components/Users/usersContainer'
 
 
- const App = (props) => {
-
-        return (
+const App = () => {
+    return (
             <div className='app-wrapper'>
-                <Header/>
-                <Switch>
-                <Route path='/dialogs'
-                       render={ () => <Dialogs store = {props.store} />
+                <Header />
 
-                       }/>
+                <div className='app-wrapper-content'>
+                    <Route path='/dialogs'
+                           render={ () => <DialogsContainer /> }/>
 
-                <Route path='/profile'
-                       render={ () => <Profile
-                           profilePage={props.state.profilePage}
-                           dispatch={props.dispatch}/> }/>
-                    </Switch>
+                    <Route path='/profile'
+                           render={ () => <Profile /> }/>
+                    <Route path='/users'
+                           render={ () => <UsersContainer/> }/>
+                </div>
             </div>
         )
-    }
+}
 
 export default App;
-
-
-

@@ -7,6 +7,8 @@ import Navbar from "../Navbar/Navbar";
 import useStyles from "./styles-header";
 
 
+
+
 export default function Header() {
     const classes = useStyles();
 
@@ -18,6 +20,7 @@ export default function Header() {
                     <Typography variant="h6" className={classes.title}>
                         МЕНЮ
                     </Typography>
+
                     <Button color="inherit">Login</Button>
                 </Toolbar>
             </AppBar>

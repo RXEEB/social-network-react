@@ -13,6 +13,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import { withRouter } from "react-router-dom";
 import Divider from "@material-ui/core/Divider";
 import logo from '../../assets/logo/linkedin.svg'
+import PeopleAltRoundedIcon from '@material-ui/icons/PeopleAltRounded';
 
 const useStyles = makeStyles({
     list: {
@@ -53,9 +54,9 @@ function Navbar(props) {
         },
 
         {
-            text: "News",
-            icon: <MailIcon />,
-            onClick: () => history.push("/news")
+            text: "Users",
+            icon: <PeopleAltRoundedIcon />,
+            onClick: () => history.push("/users")
         }
 
 
