@@ -10,40 +10,37 @@ import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 
 
-
 import PersonAddRoundedIcon from '@material-ui/icons/PersonAddRounded';
 import PersonAddDisabledRoundedIcon from '@material-ui/icons/PersonAddDisabledRounded';
 import css from './Users.module.css'
-
 
 
 let UsersFunc = (props) => {
     const classes = useStyles();
 
 
-
-    let getUsers =()=> {
+    let getUsers = () => {
 
     }
-        if (props.users.length === 0) {
+    if (props.users.length === 0) {
 
-            axios.get('https://social-network.samuraijs.com/api/1.0/users').then(response => {
+        axios.get('https://social-network.samuraijs.com/api/1.0/users').then(response => {
 
-                props.setUsers(response.data.items)
-            })
+            props.setUsers(response.data.items)
+        })
 
 
-        }
+    }
 
 
     return <div className={css.wrapper}>
 
 
         {
-            props.users.map(u =>  <Card key={u.id} className={classes.root}>
+            props.users.map(u => <Card key={u.id} className={classes.root}>
 
                     <CardContent>
-                        <Avatar alt="user avatar" src={u.photos.small }/>
+                        <Avatar alt="user avatar" src={u.photos.small}/>
                         <Typography className={classes.title} color="textSecondary" gutterBottom>
                             {u.status}
                         </Typography>
@@ -61,23 +58,21 @@ let UsersFunc = (props) => {
                         </Typography>
                     </CardContent>
                     <CardActions>
-                        {u.followed ? <Button startIcon={<PersonAddDisabledRoundedIcon />}  variant="contained" onClick={() => {
+                        {u.followed ?
+                            <Button startIcon={<PersonAddDisabledRoundedIcon/>} variant="contained" onClick={() => {
                                 props.unfollow(u.id)
                             }}>Unfollow</Button>
-                            : <Button startIcon={<PersonAddRoundedIcon />} variant="contained" onClick={() => {
+                            : <Button startIcon={<PersonAddRoundedIcon/>} variant="contained" onClick={() => {
                                 props.follow(u.id)
                             }}>follow</Button>}
 
                     </CardActions>
 
                 </Card>
-
             )
 
         }
-            </div>
-
-
+    </div>
 
 
 }
