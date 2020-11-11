@@ -1,75 +1,110 @@
 import React from "react";
 import *as axios from 'axios'
-import css from './Users.module.css'
-import useStyles from './usersMUIstyle'
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
+
+import Ava from './../../assets/Avatar/avatar_1.svg'
+
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import Avatar from '@material-ui/core/Avatar';
+
+import css from './Users.module.css'
+
+// import Button from "@material-ui/core/Button";
+// import PersonAddDisabledRoundedIcon from "@material-ui/icons/PersonAddDisabledRounded";
+// import PersonAddRoundedIcon from "@material-ui/icons/PersonAddRounded";
 
 
-import PersonAddRoundedIcon from '@material-ui/icons/PersonAddRounded';
-import PersonAddDisabledRoundedIcon from '@material-ui/icons/PersonAddDisabledRounded';
+
+class Users extends React.Component{
+    // constructor(props) {
+    //     super(props);
+    //
+    //
+    // }
+    componentDidMount() {
 
 
+                axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`).then(response => {
 
-let Users = (props) => {
-    const classes = useStyles();
-
-
-    let getUsers =()=> {
+                    this.props.setUsers(response.data.items)
+                    this.props.setTotalUsersCount(response.data.totalCount)
+                })
 
     }
-        if (props.users.length === 0) {
 
-            axios.get('https://social-network.samuraijs.com/api/1.0/users').then(response => {
-                debugger
-                props.setUsers(response.data.items)
-            })
+    onPageChanged =(pageNumber) =>{
+        this.props.setCurrentPage(pageNumber)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`).then(response => {
+
+            this.props.setUsers(response.data.items)
+
+        })
+    }
+
+    render() {
+        let pagesCount = this.props.totalUsersCount / this.props.pageSize
 
 
-        }
 
 
-    return <div className={css.wrapper}>
-        {
-            props.users.map(u => <Card key={u.id} className={classes.root}>
-                    <CardContent>
-                        <Avatar alt="user avatar" src={u.photos.small }/>
-                        <Typography className={classes.title} color="textSecondary" gutterBottom>
-                            {u.status}
-                        </Typography>
-                        <Typography variant="h5" component="h2">
-                            {u.name}
-                        </Typography>
-                        <Typography className={classes.pos} color="textSecondary">
-                            {'u.location.country'}
-                            {'u.location.city'}
-                        </Typography>
-                        <Typography variant="body2" component="p">
-                            well meaning and kindly.
-                            <br/>
-                            {'"a benevolent smile"'}
-                        </Typography>
-                    </CardContent>
-                    <CardActions>
-                        {u.followed ? <Button startIcon={<PersonAddDisabledRoundedIcon />}  variant="contained" onClick={() => {
-                                props.unfollow(u.id)
-                            }}>Unfollow</Button>
-                            : <Button startIcon={<PersonAddRoundedIcon />} variant="contained" onClick={() => {
-                                props.follow(u.id)
-                            }}>follow</Button>}
+        let pages =[]
+        for (let i=1; i <= pagesCount ; i++){
+            pages.push(i)
 
-                    </CardActions>
-                </Card>
-            )
 
         }
-    </div>
 
+
+
+        return(
+            <div className={css.container}>
+
+                <div className={css.pagination} >
+                    {pages.map(p => <span className={this.props.currentPage === p && css.selectedPage  }
+                    onClick={(e) => {this.onPageChanged(p)}}
+                    >{p}</span> )}
+
+
+                </div>
+            <div className={css.wrapper}>
+
+                {
+                    this.props.users.map(u =>
+                        <div key = {u.id}>
+                            <div className={css.card}>
+                                <div className={css.cardImage}>
+                                    <img className={css.bg_zig_zag} src={u.photos.small } alt=""/>
+                                </div>
+                                <div className={css.profileImage}>
+                                    <img src={u.photos.small  != null ? u.photos.small : Ava } alt=""/>
+                                </div>
+                                <div className={css.cardContent}>
+                                    <h3>{u.name}</h3>
+                                    <p>{u.status}</p>
+                                </div>
+                                <div className={css.btn} >
+                                    {u.followed ? <Button color="primary" disableElevation className={css.btn} variant="contained" onClick={() => {
+                                            this.props.unfollow(u.id)
+                                        }}>Unfollow</Button>
+                                        : <Button color="primary" disableElevation className={css.btn} variant="contained" onClick={() => {
+                                            this.props.follow(u.id)
+                                        }}>follow</Button>}
+                                </div>
+                            </div>
+                            {/*<div>*/}
+                            {/*    <img src={u.photos.small } alt=""/>*/}
+                            {/*</div>*/}
+
+
+
+                        </div>
+                    )
+                }
+
+            </div>
+            </div>
+        )
+    }
 
 }
+
 
 export default Users;
