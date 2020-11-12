@@ -1,22 +1,49 @@
+
+.letter{
+    border: 1px solid red;
+    border-radius: 14px 14px 14px 0;
+    padding: 9px 14px;
+    font-size: 1.6rem;
+    margin-bottom: 5px;
+
+}
+
 .dialogs {
     display: grid;
     grid-template-columns: 2fr 10fr;
-}
 
+
+}
 .dialogsItems {
+
     padding: 10px;
     color: white;
+
+
 }
+
 
 .dialogsItems .active {
     color: gold;
 }
 
 .messages {
-    padding: 10px;
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column-reverse;
+    overflow-y: scroll;
+    border: 1px solid black;
+    height: 60vh;
+    padding: 0 20px;
+
+
 }
 
-.messages .message {
+.message {
     color: white;
+    border: 1px solid black;
 }
+
+
+
 
