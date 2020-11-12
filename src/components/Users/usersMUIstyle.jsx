@@ -3,6 +3,7 @@ import {makeStyles} from "@material-ui/core/styles";
 const useStyles = makeStyles({
     root: {
         minWidth: 275,
+        maxWidth: 275,
         margin: '10px 10px'
     },
     bullet: {
