@@ -1,5 +1,6 @@
 import React from "react";
 import css from './Users.module.css'
+import {NavLink} from "react-router-dom";
 
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
@@ -10,16 +11,17 @@ import CardActions from "@material-ui/core/CardActions";
 import PersonAddDisabledRoundedIcon from "@material-ui/icons/PersonAddDisabledRounded";
 import PersonAddRoundedIcon from "@material-ui/icons/PersonAddRounded";
 import useStyles from "./usersMUIstyle";
+import IconButton from '@material-ui/core/IconButton';
+
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import * as axios from "axios";
+import {unfollow} from "../../redux/users-reducer";
 
 
-
-
-
-
-
-let Users =  (props) => {
+let Users = (props) => {
     const classes = useStyles();
-    let pagesCount = Math.ceil (props.totalUsersCount / props.pageSize/20 )
+    let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize / 20)
 
 
     let pages = []
@@ -30,10 +32,7 @@ let Users =  (props) => {
     }
 
 
-
-
-
-    return(
+    return (
         <div className={css.container}>
 
             <div className={css.pagination}>
@@ -50,7 +49,9 @@ let Users =  (props) => {
                     props.users.map(u => <Card key={u.id} className={classes.root}>
 
                             <CardContent>
-                                <Avatar alt="user avatar" src={u.photos.small}/>
+                                <NavLink to={'/profile/' + u.id}>
+                                    <Avatar alt="user avatar" src={u.photos.small}/>
+                                </NavLink>
                                 <Typography className={classes.title} color="textSecondary" gutterBottom>
                                     {u.status}
                                 </Typography>
@@ -67,14 +68,50 @@ let Users =  (props) => {
                                 {/*    {'"a benevolent smile"'}*/}
                                 {/*</Typography>*/}
                             </CardContent>
+
                             <CardActions>
-                                {u.followed ?
-                                    <Button startIcon={<PersonAddDisabledRoundedIcon/>} variant="contained" onClick={() => {
-                                        props.unfollow(u.id)
-                                    }}>Unfollow</Button>
-                                    : <Button startIcon={<PersonAddRoundedIcon/>} variant="contained" onClick={() => {
-                                        props.follow(u.id)
-                                    }}>follow</Button>}
+                                {/*{u.followed ?*/}
+                                {/*    <Button startIcon={<PersonAddDisabledRoundedIcon/>} variant="contained" onClick={() => {*/}
+                                {/*        props.unfollow(u.id)*/}
+                                {/*    }}>Unfollow</Button>*/}
+                                {/*    : <Button startIcon={<PersonAddRoundedIcon/>} variant="contained" onClick={() => {*/}
+                                {/*        props.follow(u.id)*/}
+                                {/*    }}>follow</Button>}*/}
+                                {/*<IconButton aria-label="add to favorites">*/}
+                                {/*    <FavoriteIcon />*/}
+                                {/*</IconButton>*/}
+
+                                {u.followed ? <IconButton startIcon={<FavoriteIcon/>} variant="contained" onClick={() => {
+
+                                        axios.delete(`https://social-network.samuraijs.com/api/1.0/follow${u.id} `,
+                                            {
+                                                withCredentials: true,
+                                                headers: {
+                                                    "API-KEY": "8dd45d12-2137-4ff0-93b2-7557795beab9"
+                                                }
+                                            })
+                                            .then(response => {
+                                                if (response.data.resultCode === 0) {
+                                                    props.unfollow(u.id)
+                                                }
+                                            })
+                                    }}><FavoriteIcon/></IconButton>
+                                    : <IconButton startIcon={<FavoriteBorderIcon/>} variant="contained" onClick={() => {
+                                        axios.post(`https://social-network.samuraijs.com/api/1.0/follow${u.id} `, {},
+                                            {withCredentials: true,
+                                                headers: {
+                                                    "API-KEY": "8dd45d12-2137-4ff0-93b2-7557795beab9"
+                                                }
+                                            })
+                                            .then(response => {
+                                                if (response.data.resultCode === 0) {
+                                                    props.follow(u.id)
+                                                }
+                                            })
+
+
+                                    }}><FavoriteBorderIcon/> </IconButton>}
+
 
                             </CardActions>
 

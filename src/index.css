@@ -7,9 +7,17 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #f5f5f5;
-  box-sizing: border-box;
-}
 
+}
+/*a.text:active,*/
+/*a.text {*/
+/*  text-decoration: none;*/
+/*  color: red;*/
+/*}*/
+/** a {*/
+/*  color: chartreuse;*/
+/*  text-decoration: none;*/
+/*}*/
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
