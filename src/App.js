@@ -5,7 +5,7 @@ import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import UsersContainer from './components/Users/usersContainer'
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import Test from "./components/Test/Test";
-import Container from '@material-ui/core/Container';
+
 import HeaderContainer from "./components/Header/HeaderContainer";
 
 
@@ -17,7 +17,7 @@ const App = () => {
 
             <div className='app-wrapper'>
                 <HeaderContainer />
-                <Container maxWidth="xl">
+
                 <div className='app-wrapper-content'>
                     <Route path='/dialogs'
                            render={ () => <DialogsContainer /> }/>
@@ -29,7 +29,7 @@ const App = () => {
                     <Route path='/test'
                            render={ () => <Test/> }/>
                 </div>
-                </Container>
+
             </div>
 
         )

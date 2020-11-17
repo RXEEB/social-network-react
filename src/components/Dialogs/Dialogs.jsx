@@ -5,9 +5,21 @@ import Message from "./Message/Message";
 // import useStyles from "./DialogsStyleMUI";
 // import {Grid} from "@material-ui/core";
 // import Paper from "@material-ui/core/Paper";
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        '& > *': {
+            margin: theme.spacing(1),
+            width: '25ch',
+        },
+    },
+}));
 
 const Dialogs = (props) => {
-
+    const classes = useStyles();
     let state = props.dialogsPage;
 
     let dialogsElements = state.dialogs.map(d => <DialogItem name={d.name} key={d.id} id={d.id}/>);
@@ -35,13 +47,22 @@ const Dialogs = (props) => {
 
             </div>
 
-            <div className={css.textarea}>
+            {/*<div className={css.textarea}>*/}
 
-                        <textarea  value={newMessageBody}
-                                  onChange={onNewMessageChange}
-                                  placeholder='Enter your message'/>
+            {/*            <textarea  value={newMessageBody}*/}
+            {/*                      onChange={onNewMessageChange}*/}
+            {/*                      placeholder='Enter your message'/>*/}
 
-            </div>
+            {/*</div>*/}
+
+            <form className={classes.root} noValidate autoComplete="off">
+                <TextField id="outlined-basic" onChange={onNewMessageChange} value={newMessageBody} label="Сообщение" variant="outlined" />
+
+            </form>
+
+
+
+
             <div><button onClick={onSendMessageClick}>Send</button></div>
         </div>
     )
