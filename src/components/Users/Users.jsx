@@ -15,6 +15,7 @@ import IconButton from '@material-ui/core/IconButton';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import * as axios from "axios";
+import {usersAPI} from "../../api/api";
 
 
 let Users = (props) => {
@@ -79,40 +80,16 @@ let Users = (props) => {
                                 {/*    <FavoriteIcon />*/}
                                 {/*</IconButton>*/}
 
-                                {u.followed ? <IconButton disabled={props.followingInProgress.some(id => id === u.id)} startIcon={<FavoriteIcon/>} variant="contained" onClick={() => {
-                                        props.toggleFollowingProgress(true, u.id)
-                                        axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${u.id} `,
-                                            {
-                                                withCredentials: true,
-                                                headers: {
-                                                    "API-KEY": "8dd45d12-2137-4ff0-93b2-7557795beab9"
-                                                }
-                                            })
-                                            .then(response => {
-                                                if (response.data.resultCode === 0) {
-                                                    props.unfollow(u.id)
-                                                }
-                                                props.toggleFollowingProgress(false, u.id)
-                                            })
-                                    }}><FavoriteIcon/></IconButton>
-                                    : <IconButton  disabled={props.followingInProgress.some(id => id === u.id)} startIcon={<FavoriteBorderIcon />} variant="contained" onClick={() => {
-                                        props.toggleFollowingProgress(true, u.id)
-                                        axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${u.id} `, {},
-                                            {
-                                                withCredentials: true,
-                                                headers: {
-                                                    "API-KEY": "8dd45d12-2137-4ff0-93b2-7557795beab9"
-                                                }
-                                            })
-                                            .then(response => {
-                                                if (response.data.resultCode === 0) {
-                                                    props.follow(u.id)
-                                                }
-                                                props.toggleFollowingProgress(false, u.id)
-                                            })
+                                {u.followed ? <IconButton startIcon={<FavoriteIcon/>} variant="contained"
+                                                          disabled={props.followingInProgress.some(id => id === u.id)}
+                                                          onClick={() => {props.unfollow(u.id)
+                                                          }}>
+                                        <FavoriteIcon/></IconButton>
+                                    : <IconButton  startIcon={<FavoriteBorderIcon/>} variant="contained"
+                                        disabled={props.followingInProgress.some(id => id === u.id)}
 
-
-                                    }}><FavoriteBorderIcon/> </IconButton>}
+                                                  onClick={() => {props.follow(u.id)}}>
+                                        <FavoriteBorderIcon/> </IconButton>}
 
 
                             </CardActions>

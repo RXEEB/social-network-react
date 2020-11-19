@@ -58,6 +58,7 @@ function Navbar(props) {
             icon: <PeopleAltRoundedIcon />,
             onClick: () => history.push("/users")
         },
+
         {
             text: "Test",
             icon: <PeopleAltRoundedIcon />,

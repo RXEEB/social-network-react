@@ -2,11 +2,12 @@ import React from 'react';
 import css from './Dialogs.module.css';
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
-// import useStyles from "./DialogsStyleMUI";
-// import {Grid} from "@material-ui/core";
-// import Paper from "@material-ui/core/Paper";
+
+import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import {Redirect} from "react-router-dom";
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -34,7 +35,8 @@ const Dialogs = (props) => {
         let body = e.target.value;
         props.updateNewMessageBody(body);
     }
-    // const classes = useStyles();
+    // if(!props.isAuth)
+    //     return <Redirect to ="/login"/>
 
 
     return (
@@ -63,6 +65,15 @@ const Dialogs = (props) => {
 
 
 
+
+            <Button
+                variant="contained"
+                color="primary"
+                className={classes.button}
+                onClick={onSendMessageClick}
+            >
+                Send
+            </Button>
             <div><button onClick={onSendMessageClick}>Send</button></div>
         </div>
     )
